@@ -307,6 +307,17 @@ function TetraMaster() {
     return () => window.removeEventListener('keydown', preventArrowScroll, { passive: false });
   }, []);
 
+  // Ensure a block is spawned immediately when game is set to running, but there's no block yet and not gameOver
+  useEffect(() => {
+    if (running && !block && !gameOver) {
+      setBlock({ type: nextBlock.type, rotation: 0 });
+      setNextBlock({ type: getRandomBlockType(), rotation: 0 });
+      setPos({ x: 3, y: -2 });
+    }
+    // Only run when running, block, nextBlock, or gameOver changes
+    // eslint-disable-next-line
+  }, [running, block, nextBlock, gameOver]);
+
   useEffect(() => {
     if (!running || gameOver) return;
     function handleKeyDown(e) {
