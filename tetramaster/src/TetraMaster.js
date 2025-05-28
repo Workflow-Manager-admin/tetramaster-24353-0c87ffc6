@@ -426,38 +426,46 @@ function TetraMaster() {
       <div
         style={{
           position: 'absolute',
-          top: '28%',
-          left: '7%',
-          right: '7%',
-          background: 'rgba(70,60,100,0.90)',
+          top: '38%',
+          left: '6.5%',
+          right: '6.5%',
+          background: 'rgba(70,60,100,0.93)',
           color: ACCENT,
           textAlign: 'center',
-          borderRadius: 9,
-          padding: '16px 6px 12px 6px',
+          borderRadius: 4.8,
+          padding: '6px 2.2px 5px 2.2px',
           zIndex: 10,
-          boxShadow: '0 3px 14px rgba(30,8,44,0.16)',
+          boxShadow: '0 2px 6px rgba(30,8,44,0.11)',
           minWidth: 0,
+          fontSize: 12.1,
         }}
       >
         <div
           style={{
-            fontSize: 19,
+            fontSize: 11.9,
             fontWeight: 800,
-            letterSpacing: 0.4,
-            lineHeight: 1.1,
+            letterSpacing: 0.19,
+            lineHeight: 1.05,
+            marginBottom: 4,
+            marginTop: 0,
+            padding: 0,
           }}
         >
           GAME OVER
         </div>
-        <div style={{ margin: '7px auto 6px auto', color: '#ffe156cc', fontSize: 13, fontWeight: 500 }}>
+        <div style={{ margin: '2.5px auto 1.1px auto', color: '#ffe156cc', fontSize: 9.2, fontWeight: 500 }}>
           Score: {score}
         </div>
         <button
           className="btn btn-large"
           style={{
-            fontSize: 13,
-            marginTop: 6,
+            fontSize: 8.5,
+            marginTop: 3.5,
+            marginBottom: 0,
             lineHeight: 1,
+            padding: "3px 0.8px",
+            borderRadius: 2.5,
+            width: 38,
           }}
           onClick={startGame}
         >
