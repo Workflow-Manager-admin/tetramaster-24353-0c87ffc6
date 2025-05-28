@@ -472,6 +472,7 @@ function TetraMaster() {
       style={{
         background: GRID_BG,
         minHeight: 0,
+        height: "100%",
         width: '100vw',
         display: 'flex',
         alignItems: 'flex-start',
@@ -480,48 +481,48 @@ function TetraMaster() {
         overflow: 'hidden',
         padding: 0,
         margin: 0,
-        height: 'calc(100vh - 36px)', // strictly under navbar
-        maxHeight: 'calc(100vh - 36px)',
+        boxSizing: "border-box"
       }}
     >
       <div
         style={{
           display: 'flex',
-          gap: 3,
+          gap: 1.3,
           boxShadow: 'none',
-          padding: 1,
-          borderRadius: 5,
+          padding: 0.5,
+          borderRadius: 3.5,
           background: 'rgba(34,34,59,1)',
           border: `1px solid ${SIDEBAR_BG}`,
           marginTop: 0,
           marginBottom: 0,
           width: 'fit-content',
-          maxWidth: '99vw',
+          maxWidth: '100vw',
           minHeight: 0,
           height: '100%',
+          boxSizing: "border-box"
         }}
       >
         {/* Play grid - Ultra compact */}
-        <div style={{ position: 'relative', minHeight: 0 }}>
+        <div style={{ position: 'relative', minHeight: 0, margin: 0, padding: 0 }}>
           <div
             style={{
               background: GRID_BG,
               display: 'grid',
-              borderRadius: 2,
+              borderRadius: 1.7,
               border: `1px solid ${ACCENT}`,
-              gridTemplateColumns: `repeat(${GRID_WIDTH}, 14.7px)`,
-              gridTemplateRows: `repeat(${GRID_HEIGHT}, 14.7px)`,
-              gap: 0.17,
+              gridTemplateColumns: `repeat(${GRID_WIDTH}, 13.35px)`,
+              gridTemplateRows: `repeat(${GRID_HEIGHT}, 13.35px)`,
+              gap: 0.08,
               boxShadow: 'none',
               position: 'relative',
               zIndex: 1,
               aspectRatio: `${GRID_WIDTH}/${GRID_HEIGHT}`,
-              maxHeight: 'calc(100vh - 38px)',
+              maxHeight: 'none',
               minHeight: 0,
               margin: 0,
               padding: 0,
-              width: `${GRID_WIDTH * 14.7 + (GRID_WIDTH - 1) * 0.17}px`,
-              height: `${GRID_HEIGHT * 14.7 + (GRID_HEIGHT - 1) * 0.17}px`,
+              width: `${GRID_WIDTH * 13.35 + (GRID_WIDTH - 1) * 0.08}px`,
+              height: `${GRID_HEIGHT * 13.35 + (GRID_HEIGHT - 1) * 0.08}px`,
               overflow: 'hidden',
             }}
           >
@@ -530,13 +531,13 @@ function TetraMaster() {
                 <div
                   key={`${y}-${x}`}
                   style={{
-                    width: 14.7,
-                    height: 14.7,
-                    borderRadius: 1.3,
+                    width: 13.35,
+                    height: 13.35,
+                    borderRadius: 1.1,
                     background: cell ? COLORS[cell] : COLORS.empty,
-                    border: cell ? `0.8px solid ${ACCENT}` : '0.6px solid #262655',
+                    border: cell ? `0.7px solid ${ACCENT}` : '0.5px solid #262655',
                     boxSizing: 'border-box',
-                    boxShadow: cell ? '0 1px 2px #0004' : 'none',
+                    boxShadow: cell ? '0 1px 2px #0002' : 'none',
                     margin: 0,
                     padding: 0,
                     transition: 'background 0.07s',
@@ -548,49 +549,52 @@ function TetraMaster() {
           {/* GameOver overlay */}
           {renderGameOver()}
         </div>
-        {/* Sidebar - Ultra Compact */}
+        {/* Sidebar - Minimal size */}
         <div
           style={{
-            width: 57,
+            width: 44,
             background: SIDEBAR_BG,
             color: ACCENT,
-            borderRadius: 2.7,
-            padding: '2.6px 1.3px 3px 1.3px',
+            borderRadius: 2.1,
+            padding: '1.3px 0.7px 2.1px 0.7px',
             display: 'flex',
             flexDirection: 'column',
-            gap: 2.7,
+            gap: 1.5,
             alignItems: 'center',
-            border: `0.9px solid ${ACCENT}`,
+            border: `0.7px solid ${ACCENT}`,
             boxShadow: 'none',
             minHeight: 0,
             margin: 0,
-            fontSize: 9.6,
+            fontSize: 8.1,
             height: '100%',
+            boxSizing: "border-box"
           }}
         >
           <div
             style={{
               fontWeight: 700,
-              fontSize: 10.3,
+              fontSize: 8.7,
               marginBottom: 0,
               color: '#ffe156d9',
-              letterSpacing: 0.4,
+              letterSpacing: 0.32,
               lineHeight: 1,
-              marginTop: 0.4,
+              marginTop: 0.2,
+              padding: 0,
             }}
           >
             Score
           </div>
           <div
             style={{
-              minHeight: 10.9,
-              fontSize: 11.5,
+              minHeight: 7.6,
+              fontSize: 9.7,
               fontWeight: 800,
               color: '#fff',
               marginBottom: 0,
               lineHeight: '1',
-              letterSpacing: '0.21px',
-              marginTop: 0.3,
+              letterSpacing: '0.13px',
+              marginTop: 0.15,
+              padding: 0,
             }}
           >
             {score}
@@ -598,41 +602,44 @@ function TetraMaster() {
           <div
             style={{
               height: 1,
-              width: '97%',
-              margin: '0.7px 0 0.9px 0',
-              background: 'rgba(255,255,255,0.10)',
+              width: '95%',
+              margin: '0.5px 0 0.5px 0',
+              background: 'rgba(255,255,255,0.09)',
+              padding: 0,
             }}
           />
           <div
             style={{
               fontWeight: 500,
-              fontSize: 8.4,
+              fontSize: 7.2,
               color: ACCENT,
               marginBottom: 0,
-              letterSpacing: 0.04,
-              marginTop: 0.3,
+              letterSpacing: 0.02,
+              marginTop: 0.12,
+              padding: 0,
             }}
           >
             Next
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: 0 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: 0, margin: 0 }}>
             {renderNextBlockPreview()}
           </div>
           <button
             className="btn btn-large"
             style={{
-              marginTop: 2,
-              width: '40px',
+              marginTop: 1.1,
+              width: '31px',
               background: running ? '#fa4659bb' : '#43e97bbb',
               fontWeight: '600',
-              letterSpacing: 0.12,
-              fontSize: 9.2,
-              border: `0.74px solid ${ACCENT}`,
-              borderRadius: 1.7,
+              letterSpacing: 0.09,
+              fontSize: 7.6,
+              border: `0.60px solid ${ACCENT}`,
+              borderRadius: 1.1,
               outline: 'none',
-              minHeight: '14.3px',
-              padding: '2.5px 0',
-              marginBottom: 0.7,
+              minHeight: '10px',
+              padding: '1.3px 0',
+              marginBottom: 0.3,
+              boxSizing: "border-box"
             }}
             onClick={() => (running ? setRunning(false) : startGame())}
             disabled={running}
@@ -641,19 +648,20 @@ function TetraMaster() {
           </button>
           <div
             style={{
-              fontSize: 5.7,
+              fontSize: 4.2,
               color: ACCENT,
-              marginTop: 0.6,
+              marginTop: 0.37,
               fontWeight: 400,
-              opacity: 0.74,
+              opacity: 0.72,
               textAlign: 'center',
               lineHeight: 1.10,
-              letterSpacing: 0.04,
+              letterSpacing: 0.03,
               marginBottom: 0,
-              maxWidth: '98%',
+              maxWidth: '97%',
+              padding: 0
             }}
           >
-            <div style={{ opacity: 0.76 }}>←→ rotate/drop</div>
+            <div style={{ opacity: 0.74 }}>←→ rotate/drop</div>
             <div>␣=hard</div>
             <div>↓=soft</div>
           </div>
