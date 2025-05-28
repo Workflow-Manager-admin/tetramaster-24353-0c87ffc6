@@ -301,27 +301,11 @@ function TetraMaster() {
     }
   }
 
+  // Always suppress browser scroll for arrow keys
   useEffect(() => {
-    // Compact: prevent default scroll via arrow keys always when game active
-    function handler(e) {
-      if (
-        e.code === "ArrowLeft" ||
-        e.code === "ArrowRight" ||
-        e.code === "ArrowDown" ||
-        e.code === "ArrowUp"
-      ) {
-        e.preventDefault();
-      }
-    }
-    if (running && !gameOver) {
-      window.addEventListener('keydown', handler, { passive: false });
-    }
-    return () => {
-      if (running && !gameOver) {
-        window.removeEventListener('keydown', handler, { passive: false });
-      }
-    };
-  }, [running, gameOver]);
+    window.addEventListener('keydown', preventArrowScroll, { passive: false });
+    return () => window.removeEventListener('keydown', preventArrowScroll, { passive: false });
+  }, []);
 
   useEffect(() => {
     if (!running || gameOver) return;
