@@ -106,3 +106,17 @@ body {
   padding: 12px 24px;
   font-size: 1.1rem;
 }
+
+/* TetraMaster: allow btn to be bolder, support pause styles */
+.btn[disabled] {
+  opacity: 0.65 !important;
+  cursor: not-allowed!important;
+}
+
+@media (max-width: 768px) {
+  .navbar, .container, .hero {
+    padding-left: 6px;
+    padding-right: 6px;
+    max-width: 100vw;
+  }
+}
