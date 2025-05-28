@@ -15,7 +15,7 @@ function App() {
         </div>
       </nav>
       {/* Main TetraMaster Game Area */}
-      <main style={{marginTop:84}}>
+      <main style={{ marginTop: 0, paddingTop: 60 }}>
         <TetraMaster />
       </main>
     </div>
