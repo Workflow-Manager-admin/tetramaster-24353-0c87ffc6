@@ -298,6 +298,28 @@ function TetraMaster() {
   }
 
   useEffect(() => {
+    // Compact: prevent default scroll via arrow keys always when game active
+    function handler(e) {
+      if (
+        e.code === "ArrowLeft" ||
+        e.code === "ArrowRight" ||
+        e.code === "ArrowDown" ||
+        e.code === "ArrowUp"
+      ) {
+        e.preventDefault();
+      }
+    }
+    if (running && !gameOver) {
+      window.addEventListener('keydown', handler, { passive: false });
+    }
+    return () => {
+      if (running && !gameOver) {
+        window.removeEventListener('keydown', handler, { passive: false });
+      }
+    };
+  }, [running, gameOver]);
+
+  useEffect(() => {
     if (!running || gameOver) return;
     function handleKeyDown(e) {
       if (e.code === 'ArrowLeft') {
