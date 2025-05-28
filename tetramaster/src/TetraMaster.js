@@ -466,19 +466,28 @@ function TetraMaster() {
   const displayGrid = renderDisplayGrid();
 
   // FULL PAREN wrapping for main return!
-  // --- MAXIMALLY COMPACT, SCROLLLESS, ZERO-WHITESPACE UI ---
+  // --- MAXIMALLY COMPACT, FLEXBOX-CONTROLLED, SYNCED SIDEBAR/GRID HEIGHT ---
+  // Set the GRID cell size in px for easy re-use.
+  const GRID_CELL_SIZE = 24; // Was 13.35, but larger gives a bigger play area if room allows
+  const OUTER_MAX_HEIGHT = `min(92vh, calc((100vw - 68px) * (${GRID_HEIGHT}/${GRID_WIDTH + 2})), 710px)`; // Auto-balance height to available space but give priority to viewport height, with margin for sidebar
+
+  // Calculate grid width and height for sizing.
+  const gridWidthPx = GRID_WIDTH * GRID_CELL_SIZE + (GRID_WIDTH - 1) * 0.08;
+  const gridHeightPx = GRID_HEIGHT * GRID_CELL_SIZE + (GRID_HEIGHT - 1) * 0.08;
+
+  // Responsive layout: wrap grid & sidebar in a flex-row, constrain height to OUTER_MAX_HEIGHT.
   return (
     <div
       style={{
         background: GRID_BG,
         minHeight: 0,
         height: "100%",
-        width: '100vw',
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        fontFamily: 'Inter, Arial, sans-serif',
-        overflow: 'hidden',
+        width: "100vw",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "Inter, Arial, sans-serif",
+        overflow: "hidden",
         padding: 0,
         margin: 0,
         boxSizing: "border-box"
@@ -486,44 +495,63 @@ function TetraMaster() {
     >
       <div
         style={{
-          display: 'flex',
-          gap: 1.3,
-          boxShadow: 'none',
-          padding: 0.5,
-          borderRadius: 3.5,
-          background: 'rgba(34,34,59,1)',
-          border: `1px solid ${SIDEBAR_BG}`,
-          marginTop: 0,
-          marginBottom: 0,
-          width: 'fit-content',
-          maxWidth: '100vw',
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 12,
+          padding: 8,
+          borderRadius: 7,
+          background: "rgba(34,34,59,1)",
+          border: `1.2px solid ${SIDEBAR_BG}`,
+          margin: 0,
+          width: "fit-content",
+          minWidth: 0,
+          maxWidth: "100vw",
           minHeight: 0,
-          height: '100%',
-          boxSizing: "border-box"
+          maxHeight: OUTER_MAX_HEIGHT,
+          height: OUTER_MAX_HEIGHT,
+          boxSizing: "border-box",
+          overflow: "hidden",
         }}
       >
-        {/* Play grid - Ultra compact */}
-        <div style={{ position: 'relative', minHeight: 0, margin: 0, padding: 0 }}>
+        {/* Play grid - Ultra compact, responsive to container height */}
+        <div
+          style={{
+            position: "relative",
+            minHeight: 0,
+            minWidth: 0,
+            margin: 0,
+            padding: 0,
+            display: "flex",
+            alignItems: "center",
+            height: "100%",
+            boxSizing: "border-box"
+          }}
+        >
           <div
             style={{
               background: GRID_BG,
-              display: 'grid',
-              borderRadius: 1.7,
-              border: `1px solid ${ACCENT}`,
-              gridTemplateColumns: `repeat(${GRID_WIDTH}, 13.35px)`,
-              gridTemplateRows: `repeat(${GRID_HEIGHT}, 13.35px)`,
-              gap: 0.08,
-              boxShadow: 'none',
-              position: 'relative',
+              display: "grid",
+              borderRadius: 2.6,
+              border: `1.22px solid ${ACCENT}`,
+              gridTemplateColumns: `repeat(${GRID_WIDTH}, 1fr)`,
+              gridTemplateRows: `repeat(${GRID_HEIGHT}, 1fr)`,
+              gap: 0.45,
+              boxShadow: "none",
+              position: "relative",
               zIndex: 1,
               aspectRatio: `${GRID_WIDTH}/${GRID_HEIGHT}`,
-              maxHeight: 'none',
+              maxHeight: "100%",
               minHeight: 0,
               margin: 0,
               padding: 0,
-              width: `${GRID_WIDTH * 13.35 + (GRID_WIDTH - 1) * 0.08}px`,
-              height: `${GRID_HEIGHT * 13.35 + (GRID_HEIGHT - 1) * 0.08}px`,
-              overflow: 'hidden',
+              width: gridWidthPx,
+              height: gridHeightPx,
+              maxWidth: gridWidthPx,
+              maxHeight: gridHeightPx,
+              overflow: "hidden",
+              boxSizing: "border-box"
             }}
           >
             {displayGrid.map((row, y) =>
@@ -531,16 +559,16 @@ function TetraMaster() {
                 <div
                   key={`${y}-${x}`}
                   style={{
-                    width: 13.35,
-                    height: 13.35,
-                    borderRadius: 1.1,
+                    width: GRID_CELL_SIZE,
+                    height: GRID_CELL_SIZE,
+                    borderRadius: 2.3,
                     background: cell ? COLORS[cell] : COLORS.empty,
-                    border: cell ? `0.7px solid ${ACCENT}` : '0.5px solid #262655',
-                    boxSizing: 'border-box',
-                    boxShadow: cell ? '0 1px 2px #0002' : 'none',
+                    border: cell ? `1.1px solid ${ACCENT}` : "0.9px solid #262655",
+                    boxSizing: "border-box",
+                    boxShadow: cell ? "0 1px 3px #0002" : "none",
                     margin: 0,
                     padding: 0,
-                    transition: 'background 0.07s',
+                    transition: "background 0.07s",
                   }}
                 />
               ))
@@ -549,35 +577,40 @@ function TetraMaster() {
           {/* GameOver overlay */}
           {renderGameOver()}
         </div>
-        {/* Sidebar - Minimal size */}
+        {/* Sidebar - height syncs with grid via flexbox and maxHeight, no overflow */}
         <div
           style={{
-            width: 44,
+            width: 62,
             background: SIDEBAR_BG,
             color: ACCENT,
-            borderRadius: 2.1,
-            padding: '1.3px 0.7px 2.1px 0.7px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 1.5,
-            alignItems: 'center',
-            border: `0.7px solid ${ACCENT}`,
-            boxShadow: 'none',
-            minHeight: 0,
+            borderRadius: 3.3,
+            padding: "8.5px 4.2px 10.5px 4.2px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 8,
+            alignItems: "center",
+            border: `1.21px solid ${ACCENT}`,
+            boxShadow: "none",
             margin: 0,
-            fontSize: 8.1,
-            height: '100%',
-            boxSizing: "border-box"
+            fontSize: 13.1,
+            height: gridHeightPx,
+            maxHeight: gridHeightPx,
+            minHeight: 0,
+            minWidth: 0,
+            overflow: "hidden",
+            boxSizing: "border-box",
+            flex: "0 0 auto",
+            justifyContent: "flex-start",
           }}
         >
           <div
             style={{
               fontWeight: 700,
-              fontSize: 8.7,
+              fontSize: 15.7,
               marginBottom: 0,
-              color: '#ffe156d9',
-              letterSpacing: 0.32,
-              lineHeight: 1,
+              color: "#ffe156d9",
+              letterSpacing: 0.38,
+              lineHeight: 1.14,
               marginTop: 0.2,
               padding: 0,
             }}
@@ -586,13 +619,13 @@ function TetraMaster() {
           </div>
           <div
             style={{
-              minHeight: 7.6,
-              fontSize: 9.7,
-              fontWeight: 800,
-              color: '#fff',
+              minHeight: 18.8,
+              fontSize: 18.9,
+              fontWeight: 900,
+              color: "#fff",
               marginBottom: 0,
-              lineHeight: '1',
-              letterSpacing: '0.13px',
+              lineHeight: 1.1,
+              letterSpacing: "0.17px",
               marginTop: 0.15,
               padding: 0,
             }}
@@ -601,67 +634,69 @@ function TetraMaster() {
           </div>
           <div
             style={{
-              height: 1,
-              width: '95%',
-              margin: '0.5px 0 0.5px 0',
-              background: 'rgba(255,255,255,0.09)',
+              height: 2,
+              width: "95%",
+              margin: "2px 0 3px 0",
+              background: "rgba(255,255,255,0.09)",
               padding: 0,
             }}
           />
           <div
             style={{
-              fontWeight: 500,
-              fontSize: 7.2,
+              fontWeight: 600,
+              fontSize: 12,
               color: ACCENT,
               marginBottom: 0,
-              letterSpacing: 0.02,
-              marginTop: 0.12,
+              letterSpacing: 0.08,
+              marginTop: 0.20,
               padding: 0,
             }}
           >
             Next
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: 0, margin: 0 }}>
+          <div style={{ display: "flex", justifyContent: "center", width: "100%", padding: 0, margin: 0 }}>
             {renderNextBlockPreview()}
           </div>
           <button
             className="btn btn-large"
             style={{
-              marginTop: 1.1,
-              width: '31px',
-              background: running ? '#fa4659bb' : '#43e97bbb',
-              fontWeight: '600',
-              letterSpacing: 0.09,
-              fontSize: 7.6,
-              border: `0.60px solid ${ACCENT}`,
-              borderRadius: 1.1,
-              outline: 'none',
-              minHeight: '10px',
-              padding: '1.3px 0',
-              marginBottom: 0.3,
-              boxSizing: "border-box"
+              marginTop: 7.1,
+              width: "44px",
+              background: running ? "#fa4659bb" : "#43e97bbb",
+              fontWeight: "700",
+              letterSpacing: 0.13,
+              fontSize: 12.3,
+              border: `1.10px solid ${ACCENT}`,
+              borderRadius: 2.2,
+              outline: "none",
+              minHeight: "19px",
+              padding: "2.7px 0",
+              marginBottom: 7.3,
+              boxSizing: "border-box",
+              lineHeight: 1.09,
             }}
             onClick={() => (running ? setRunning(false) : startGame())}
             disabled={running}
           >
-            {running ? 'Pause' : 'Start'}
+            {running ? "Pause" : "Start"}
           </button>
           <div
             style={{
-              fontSize: 4.2,
+              fontSize: 8.7,
               color: ACCENT,
-              marginTop: 0.37,
+              marginTop: 7.33,
               fontWeight: 400,
-              opacity: 0.72,
-              textAlign: 'center',
-              lineHeight: 1.10,
-              letterSpacing: 0.03,
+              opacity: 0.81,
+              textAlign: "center",
+              lineHeight: 1.12,
+              letterSpacing: 0.07,
               marginBottom: 0,
-              maxWidth: '97%',
-              padding: 0
+              maxWidth: "97%",
+              padding: 0,
+              userSelect: "none"
             }}
           >
-            <div style={{ opacity: 0.74 }}>←→ rotate/drop</div>
+            <div style={{ opacity: 0.78 }}>←→ rotate/drop</div>
             <div>␣=hard</div>
             <div>↓=soft</div>
           </div>
