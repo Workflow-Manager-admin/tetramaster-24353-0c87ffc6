@@ -1,5 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+// Prevent default scroll for ArrowDown/up/left/right when game is focused:
+function preventArrowScroll(e) {
+  if (
+    e.code === "ArrowDown" ||
+    e.code === "ArrowUp" ||
+    e.code === "ArrowLeft" ||
+    e.code === "ArrowRight" ||
+    e.key === "Down" ||
+    e.key === "Up" ||
+    e.key === "Left" ||
+    e.key === "Right"
+  ) {
+    e.preventDefault();
+  }
+}
 // Color and block definitions
 const COLORS = {
   I: '#40c9ff',
