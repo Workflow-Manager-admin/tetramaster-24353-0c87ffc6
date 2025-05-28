@@ -152,3 +152,6 @@ src/TetraMaster.js
   Line 352:11:  Parsing error: Unexpected token, expected "}" (352:11)
 
 webpack compiled with 2 errors
+Compiling...
+Compiled successfully!
+webpack compiled successfully
