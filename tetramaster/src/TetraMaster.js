@@ -509,4 +509,5 @@ function TetraMaster() {
   );
 }
 
+// PUBLIC_INTERFACE
 export default TetraMaster;
