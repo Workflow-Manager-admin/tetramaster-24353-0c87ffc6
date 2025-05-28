@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-// Prevent default scroll for ArrowDown/up/left/right when game is focused:
+/**
+ * Prevent default scroll for ArrowDown/up/left/right regardless of game focus.
+ * Global event listener ensures arrow key controls never scroll page.
+ */
 function preventArrowScroll(e) {
   if (
     e.code === "ArrowDown" ||
@@ -13,6 +16,7 @@ function preventArrowScroll(e) {
     e.key === "Right"
   ) {
     e.preventDefault();
+    return false;
   }
 }
 // Color and block definitions
