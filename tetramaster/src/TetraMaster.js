@@ -481,7 +481,7 @@ function TetraMaster() {
       style={{
         background: GRID_BG,
         minHeight: 0,
-        height: "100%",
+        height: "100vh",
         width: "100vw",
         display: "flex",
         alignItems: "center",
@@ -509,10 +509,9 @@ function TetraMaster() {
           minWidth: 0,
           maxWidth: "100vw",
           minHeight: 0,
-          maxHeight: OUTER_MAX_HEIGHT,
-          height: OUTER_MAX_HEIGHT,
           boxSizing: "border-box",
           overflow: "hidden",
+          // Do NOT set explicit height here; let child grid height define block area
         }}
       >
         {/* Play grid - Ultra compact, responsive to container height */}
@@ -542,15 +541,13 @@ function TetraMaster() {
               position: "relative",
               zIndex: 1,
               aspectRatio: `${GRID_WIDTH}/${GRID_HEIGHT}`,
-              maxHeight: "100%",
-              minHeight: 0,
               margin: 0,
               padding: 0,
               width: gridWidthPx,
               height: gridHeightPx,
               maxWidth: gridWidthPx,
               maxHeight: gridHeightPx,
-              overflow: "hidden",
+              overflow: "visible",
               boxSizing: "border-box"
             }}
           >
@@ -662,7 +659,7 @@ function TetraMaster() {
             style={{
               marginTop: 7.1,
               width: "44px",
-              background: running ? "#fa4659bb" : "#43e97bbb",
+              background: running ? "#fa4659bb" : gameOver ? "#43e97bbb" : "#43e97bbb",
               fontWeight: "700",
               letterSpacing: 0.13,
               fontSize: 12.3,
@@ -675,10 +672,19 @@ function TetraMaster() {
               boxSizing: "border-box",
               lineHeight: 1.09,
             }}
-            onClick={() => (running ? setRunning(false) : startGame())}
-            disabled={running}
+            onClick={() => {
+              if (gameOver) {
+                startGame();
+              } else {
+                setRunning(r => !r);
+              }
+            }}
+            disabled={gameOver}
           >
-            {running ? "Pause" : "Start"}
+            {!running && !gameOver ? "Start"
+              : running && !gameOver ? "Pause"
+              : gameOver ? "Restart"
+              : "Start"}
           </button>
           <div
             style={{
