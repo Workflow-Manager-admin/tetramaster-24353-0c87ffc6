@@ -492,22 +492,25 @@ function TetraMaster() {
         overflow: 'hidden',
         padding: 0,
         margin: 0,
+        height: 'calc(100vh - 36px)', // strictly under navbar
+        maxHeight: 'calc(100vh - 36px)',
       }}
     >
       <div
         style={{
           display: 'flex',
-          gap: 6,
+          gap: 3,
           boxShadow: 'none',
-          padding: 2,
-          borderRadius: 6,
+          padding: 1,
+          borderRadius: 5,
           background: 'rgba(34,34,59,1)',
-          border: `1.3px solid ${SIDEBAR_BG}`,
+          border: `1px solid ${SIDEBAR_BG}`,
           marginTop: 0,
           marginBottom: 0,
           width: 'fit-content',
           maxWidth: '99vw',
           minHeight: 0,
+          height: '100%',
         }}
       >
         {/* Play grid - Ultra compact */}
@@ -516,19 +519,22 @@ function TetraMaster() {
             style={{
               background: GRID_BG,
               display: 'grid',
-              borderRadius: 3,
-              border: `1.2px solid ${ACCENT}`,
-              gridTemplateColumns: `repeat(${GRID_WIDTH}, 16px)`,
-              gridTemplateRows: `repeat(${GRID_HEIGHT}, 16px)`,
-              gap: 0.5,
+              borderRadius: 2,
+              border: `1px solid ${ACCENT}`,
+              gridTemplateColumns: `repeat(${GRID_WIDTH}, 14.7px)`,
+              gridTemplateRows: `repeat(${GRID_HEIGHT}, 14.7px)`,
+              gap: 0.17,
               boxShadow: 'none',
               position: 'relative',
               zIndex: 1,
-              maxHeight: '99vh',
               aspectRatio: `${GRID_WIDTH}/${GRID_HEIGHT}`,
+              maxHeight: 'calc(100vh - 38px)',
               minHeight: 0,
               margin: 0,
               padding: 0,
+              width: `${GRID_WIDTH * 14.7 + (GRID_WIDTH - 1) * 0.17}px`,
+              height: `${GRID_HEIGHT * 14.7 + (GRID_HEIGHT - 1) * 0.17}px`,
+              overflow: 'hidden',
             }}
           >
             {displayGrid.map((row, y) =>
@@ -536,13 +542,13 @@ function TetraMaster() {
                 <div
                   key={`${y}-${x}`}
                   style={{
-                    width: 16,
-                    height: 16,
-                    borderRadius: 1.9,
+                    width: 14.7,
+                    height: 14.7,
+                    borderRadius: 1.3,
                     background: cell ? COLORS[cell] : COLORS.empty,
-                    border: cell ? `1px solid ${ACCENT}` : '0.8px solid #262655',
+                    border: cell ? `0.8px solid ${ACCENT}` : '0.6px solid #262655',
                     boxSizing: 'border-box',
-                    boxShadow: cell ? '0 1px 3px #0005' : 'none',
+                    boxShadow: cell ? '0 1px 2px #0004' : 'none',
                     margin: 0,
                     padding: 0,
                     transition: 'background 0.07s',
@@ -557,45 +563,46 @@ function TetraMaster() {
         {/* Sidebar - Ultra Compact */}
         <div
           style={{
-            width: 74,
+            width: 57,
             background: SIDEBAR_BG,
             color: ACCENT,
-            borderRadius: 4,
-            padding: '4.5px 3px 5px 3px',
+            borderRadius: 2.7,
+            padding: '2.6px 1.3px 3px 1.3px',
             display: 'flex',
             flexDirection: 'column',
-            gap: 4,
+            gap: 2.7,
             alignItems: 'center',
-            border: `1.1px solid ${ACCENT}`,
+            border: `0.9px solid ${ACCENT}`,
             boxShadow: 'none',
             minHeight: 0,
             margin: 0,
-            fontSize: 11,
+            fontSize: 9.6,
+            height: '100%',
           }}
         >
           <div
             style={{
               fontWeight: 700,
-              fontSize: 11.2,
+              fontSize: 10.3,
               marginBottom: 0,
               color: '#ffe156d9',
-              letterSpacing: 0.6,
+              letterSpacing: 0.4,
               lineHeight: 1,
-              marginTop: 1,
+              marginTop: 0.4,
             }}
           >
             Score
           </div>
           <div
             style={{
-              minHeight: 13,
-              fontSize: 13.2,
+              minHeight: 10.9,
+              fontSize: 11.5,
               fontWeight: 800,
               color: '#fff',
               marginBottom: 0,
               lineHeight: '1',
-              letterSpacing: '0.36px',
-              marginTop: 0.5,
+              letterSpacing: '0.21px',
+              marginTop: 0.3,
             }}
           >
             {score}
@@ -604,17 +611,18 @@ function TetraMaster() {
             style={{
               height: 1,
               width: '97%',
-              margin: '1.2px 0 1.2px 0',
+              margin: '0.7px 0 0.9px 0',
               background: 'rgba(255,255,255,0.10)',
             }}
           />
           <div
             style={{
               fontWeight: 500,
-              fontSize: 9.3,
+              fontSize: 8.4,
               color: ACCENT,
               marginBottom: 0,
-              letterSpacing: 0.07,
+              letterSpacing: 0.04,
+              marginTop: 0.3,
             }}
           >
             Next
@@ -626,17 +634,17 @@ function TetraMaster() {
             className="btn btn-large"
             style={{
               marginTop: 2,
-              width: '52px',
+              width: '40px',
               background: running ? '#fa4659bb' : '#43e97bbb',
               fontWeight: '600',
-              letterSpacing: 0.22,
-              fontSize: 10.7,
-              border: `0.96px solid ${ACCENT}`,
-              borderRadius: 2.5,
+              letterSpacing: 0.12,
+              fontSize: 9.2,
+              border: `0.74px solid ${ACCENT}`,
+              borderRadius: 1.7,
               outline: 'none',
-              minHeight: '19.5px',
-              padding: '5px 0',
-              marginBottom: 1.5,
+              minHeight: '14.3px',
+              padding: '2.5px 0',
+              marginBottom: 0.7,
             }}
             onClick={() => (running ? setRunning(false) : startGame())}
             disabled={running}
@@ -645,14 +653,14 @@ function TetraMaster() {
           </button>
           <div
             style={{
-              fontSize: 6.9,
+              fontSize: 5.7,
               color: ACCENT,
-              marginTop: 1,
+              marginTop: 0.6,
               fontWeight: 400,
               opacity: 0.74,
               textAlign: 'center',
               lineHeight: 1.10,
-              letterSpacing: 0.07,
+              letterSpacing: 0.04,
               marginBottom: 0,
               maxWidth: '98%',
             }}
